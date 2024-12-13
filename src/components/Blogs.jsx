@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegClock } from 'react-icons/fa'; // Icono de reloj
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const Blogs = ({ blogs }) => {
     if (!blogs?.data?.length) {
         return (
@@ -13,7 +15,8 @@ const Blogs = ({ blogs }) => {
 
     const getCoverImageUrl = (coverImg) => {
         if (coverImg && coverImg[0] && coverImg[0].url) {
-            return `http://localhost:1337${coverImg[0].url}`;
+            // return `http://localhost:1337${coverImg[0].url}`;
+            return `${apiUrl}${coverImg[0].url}`;
         }
         return "https://via.placeholder.com/300"; // Imagen por defecto
     };

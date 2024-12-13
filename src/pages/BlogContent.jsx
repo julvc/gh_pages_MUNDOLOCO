@@ -7,6 +7,8 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import backButton from '../assets/back.png';
 
+const apiUrl = import.meta.env.VITE_API_URL;
+
 const BlogContent = ({ blogs }) => {
     const { category, title } = useParams();
     const navigate = useNavigate();
@@ -64,14 +66,16 @@ const BlogContent = ({ blogs }) => {
 
         const getCoverImageUrl = (coverImg) => {
             if (coverImg && Array.isArray(coverImg) && coverImg.length > 0 && coverImg[0].url) {
-                return `http://localhost:1337${coverImg[0].url}`;
+                // return `http://localhost:1337${coverImg[0].url}`;
+                return `${apiUrl}${coverImg[0].url}`;
             }
             return "https://via.placeholder.com/300";
         };
 
         const getAuthorImageUrl = (authorImg) => {
             if (authorImg && authorImg.url) {
-                return `http://localhost:1337${authorImg.url}`;
+                // return `http://localhost:1337`${authorImg.url};
+                return `${apiUrl}${authorImg.url}`;
             }
             return "https://via.placeholder.com/100";
         };
@@ -139,7 +143,8 @@ const BlogContent = ({ blogs }) => {
                                     {blog.manyImg?.map((img, index) => (
                                         <img
                                             key={index}
-                                            src={`http://localhost:1337${img.url}`}
+                                            // src={`http://localhost:1337${img.url}`}
+                                            src={`${apiUrl}${img.url}`}
                                             alt={img.name || `Image ${index}`}
                                             className="w-60 h-60 object-cover rounded-md shadow-md transform hover:scale-110 cursor-pointer transition-transform duration-300"
                                             onClick={openCarousel}
@@ -168,7 +173,8 @@ const BlogContent = ({ blogs }) => {
                                                 {blog.manyImg.map((img, index) => (
                                                     <div key={index}>
                                                         <img
-                                                            src={`http://localhost:1337${img.url}`}
+                                                            // src={`http://localhost:1337${img.url}`}
+                                                            src={`${apiUrl}${img.url}`}
                                                             alt={img.name || `Image ${index}`}
                                                             className="rounded-lg"
                                                         />
