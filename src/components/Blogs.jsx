@@ -33,7 +33,7 @@ const Blogs = ({ blogs }) => {
                     {blogs.data.map(blog => {
                         return (
                             <div key={blog.id} className="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <Link to={`/gh_pages_MUNDOLOCO/blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group">
+                                <Link to={`blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group">
                                     {/* Imagen con efecto hover */}
                                     <div className="relative w-full h-80 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${getCoverImageUrl(blog.coverImg)})` }}>
                                         {/* Fondo oscuro al hacer hover */}
