@@ -5,10 +5,8 @@ import BlogContent from './pages/BlogContent';
 import useFetch from './hooks/useFetch';
 import Layout from './Layout';
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 const App = () => {
-    const { loading, data, error } = useFetch(`${apiUrl}/api/blogs?populate=*`);
+    const { loading, data, error } = useFetch('http://localhost:1337/api/blogs?populate=*');
     // const { loading, data, error } = useFetch('http://localhost:1337/api/blogs?populate=coverImg,authorImg');
 
     if (loading) return <p>Loading...</p>;

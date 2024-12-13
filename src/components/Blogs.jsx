@@ -2,8 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegClock } from 'react-icons/fa'; // Icono de reloj
 
-const apiUrl = import.meta.env.VITE_API_URL;
-
 const Blogs = ({ blogs }) => {
     if (!blogs?.data?.length) {
         return (
@@ -15,8 +13,7 @@ const Blogs = ({ blogs }) => {
 
     const getCoverImageUrl = (coverImg) => {
         if (coverImg && coverImg[0] && coverImg[0].url) {
-            // return `http://localhost:1337${coverImg[0].url}`;
-            return `${apiUrl}${coverImg[0].url}`;
+            return `http://localhost:1337${coverImg[0].url}`;
         }
         return "https://via.placeholder.com/300"; // Imagen por defecto
     };
@@ -33,7 +30,7 @@ const Blogs = ({ blogs }) => {
                     {blogs.data.map(blog => {
                         return (
                             <div key={blog.id} className="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <Link to={`blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group">
+                                <Link to={`/blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group">
                                     {/* Imagen con efecto hover */}
                                     <div className="relative w-full h-80 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${getCoverImageUrl(blog.coverImg)})` }}>
                                         {/* Fondo oscuro al hacer hover */}
