@@ -17,9 +17,9 @@ const App = () => {
         <div>
             <Navbar />
             <Routes>
-                <Route path="/" element={<Homepage blogs={data} />} />
-                <Route path="/category/:category" element={<BlogContent blogs={data} />} />
-                <Route path="/blog/:title" element={<BlogContent blogs={data} />} />
+                <Route path="/gh_pages_MUNDOLOCO/" element={<Homepage blogs={data} />} />
+                <Route path="/gh_pages_MUNDOLOCO/category/:category" element={<BlogContent blogs={data} />} />
+                <Route path="/gh_pages_MUNDOLOCO/blog/:title" element={<BlogContent blogs={data} />} />
             </Routes>
             <Footer />
         </div>
