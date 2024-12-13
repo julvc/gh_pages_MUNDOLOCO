@@ -1,9 +1,9 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import BlogContent from './pages/BlogContent';
 import useFetch from './hooks/useFetch';
-import Layout from './Layout';
+import { Navbar, Footer } from './components';
 
 const apiUrl = import.meta.env.VITE_API_URL;
 
