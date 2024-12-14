@@ -28,5 +28,5 @@ export default {
       '3xl': '1920px',
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')], // Agrega este plugin
 };

@@ -6,8 +6,9 @@ import useFetch from './hooks/useFetch';
 import Layout from './Layout';
 
 const App = () => {
-    const { loading, data, error } = useFetch('http://localhost:1337/api/blogs?populate=*');
-    // const { loading, data, error } = useFetch('http://localhost:1337/api/blogs?populate=coverImg,authorImg');
+    console.log("VALOR VITE_API_URL");
+    console.log(import.meta.env.VITE_API_URL);
+    const { loading, data, error } = useFetch(`${import.meta.env.VITE_API_URL}/api/blogs?populate=*`);
 
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error loading blogs.</p>;

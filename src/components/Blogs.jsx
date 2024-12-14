@@ -13,7 +13,7 @@ const Blogs = ({ blogs }) => {
 
     const getCoverImageUrl = (coverImg) => {
         if (coverImg && coverImg[0] && coverImg[0].url) {
-            return `http://localhost:1337${coverImg[0].url}`;
+            return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
         }
         return "https://via.placeholder.com/300"; // Imagen por defecto
     };

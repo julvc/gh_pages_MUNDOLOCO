@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm'; // Import remarkGfm here
 import Blogs from '../components/Blogs';
 import { FaFacebook, FaInstagram, FaTwitch, FaDiscord, FaYoutube, FaArrowLeft } from 'react-icons/fa';
 import { Carousel } from 'react-responsive-carousel';
@@ -14,7 +15,7 @@ const BlogContent = ({ blogs }) => {
 
     // Redirige al home
     const goHome = () => {
-        navigate('/'); 
+        navigate('/');
     };
 
     // Manejo de eventos para evitar que navegue a otras páginas con Backspace o popstate
@@ -64,14 +65,14 @@ const BlogContent = ({ blogs }) => {
 
         const getCoverImageUrl = (coverImg) => {
             if (coverImg && Array.isArray(coverImg) && coverImg.length > 0 && coverImg[0].url) {
-                return `http://localhost:1337${coverImg[0].url}`;
+                return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
             }
             return "https://via.placeholder.com/300";
         };
 
         const getAuthorImageUrl = (authorImg) => {
             if (authorImg && authorImg.url) {
-                return `http://localhost:1337${authorImg.url}`;
+                return `${import.meta.env.VITE_API_URL}${authorImg.url}`;
             }
             return "https://via.placeholder.com/100";
         };
@@ -89,6 +90,10 @@ const BlogContent = ({ blogs }) => {
             }
         };
 
+
+        const combinedContent = `${blog.blogContentOne || ""}\n${blog.blogContentTwo || ""}\n${blog.blogContentThree || ""}`;
+
+        const markdownContent = combinedContent;
         return (
             <div className="w-full py-12 bg-[#f9f9f9] pt-20">
                 <div className="max-w-[2500px] mx-auto">
@@ -99,7 +104,7 @@ const BlogContent = ({ blogs }) => {
                             <div
                                 onClick={goHome}
                                 className="fixed bottom-10 right-5 z-20 cursor-pointer"
-                                style={{ width: '350px', height: '50px' , marginRight: '-120px'}} // Tamaño de la imagen
+                                style={{ width: '350px', height: '50px', marginRight: '-120px' }} // Tamaño de la imagen
                             >
                                 <img
                                     src={backButton} // Ruta a tu imagen personalizada
@@ -111,9 +116,17 @@ const BlogContent = ({ blogs }) => {
                             <img src={getCoverImageUrl(blog.coverImg)} alt="Cover" className="w-full h-auto mb-6 rounded-lg shadow-lg" />
                             <h1 className="font-bold text-4xl my-4">{blog.blogTitle}</h1>
                             <h3 className="font-bold text-2xl my-4">{blog.blogDesc}</h3>
-                            <ReactMarkdown>{blog.blogContentOne || "No content available"}</ReactMarkdown>
+
+                            <div className="prose">
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>{combinedContent}</ReactMarkdown>
+                            </div>
+
+                            <div className="w-full pt-28">
+                                <div className="prose" dangerouslySetInnerHTML={{ __html: markdownContent }} />
+                            </div>
+                            {/* <ReactMarkdown>{blog.blogContentOne || "No content available"}</ReactMarkdown>
                             <p className="mt-4">{blog.blogContentTwo || "No additional content"}</p>
-                            <ReactMarkdown className="mt-4">{blog.blogContentThree || ""}</ReactMarkdown>
+                            <ReactMarkdown className="mt-4">{blog.blogContentThree || ""}</ReactMarkdown> */}
 
                             {/* Zona correspondientes al video */}
                             <div id="zoneVideo" className="pt-4 flex justify-center mb-8">
@@ -139,7 +152,7 @@ const BlogContent = ({ blogs }) => {
                                     {blog.manyImg?.map((img, index) => (
                                         <img
                                             key={index}
-                                            src={`http://localhost:1337${img.url}`}
+                                            src={`${import.meta.env.VITE_API_URL}${img.url}`}
                                             alt={img.name || `Image ${index}`}
                                             className="w-60 h-60 object-cover rounded-md shadow-md transform hover:scale-110 cursor-pointer transition-transform duration-300"
                                             onClick={openCarousel}
@@ -168,7 +181,7 @@ const BlogContent = ({ blogs }) => {
                                                 {blog.manyImg.map((img, index) => (
                                                     <div key={index}>
                                                         <img
-                                                            src={`http://localhost:1337${img.url}`}
+                                                            src={`${import.meta.env.VITE_API_URL}${img.url}`}
                                                             alt={img.name || `Image ${index}`}
                                                             className="rounded-lg"
                                                         />
@@ -178,6 +191,43 @@ const BlogContent = ({ blogs }) => {
                                         </div>
                                     </div>
                                 )}
+
+                                {/* Zona del autor debajo del contenido */}
+                                <div id="authorZone" className="w-full bg-white rounded-xl drop-shadow-md py-8 mt-8 lg:mt-8">
+                                    <div className="flex items-center space-x-6">
+                                        {/* Imagen del autor a la izquierda con margen */}
+                                        <img className="p-2 w-40 h-40 rounded-full object-cover ml-4" src={getAuthorImageUrl(blog.authorImg)} alt={blog.authorName} />
+
+                                        <div className="text-left">
+                                            {/* Nombre con color azul oscuro */}
+                                            <h1 className="font-bold text-3xl text-blue-900">{blog.authorName}</h1>
+
+                                            {/* Descripción debajo del nombre */}
+                                            <p className="text-gray-900 font-medium">{blog.authorDesc || "No description available"}</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Redes Sociales alineadas a la derecha */}
+                                    <div className="flex space-x-6 mt-6 justify-end w-full pr-10">
+                                        <a href={blog.authorFacebook || "#"} target="_blank" rel="noopener noreferrer" className="text-2xl text-blue-600 hover:text-blue-800">
+                                            <FaFacebook />
+                                        </a>
+                                        <a href={blog.authorInstagram || "#"} target="_blank" rel="noopener noreferrer" className="text-2xl text-pink-600 hover:text-pink-800">
+                                            <FaInstagram />
+                                        </a>
+                                        <a href={blog.authorTwitch || "#"} target="_blank" rel="noopener noreferrer" className="text-2xl text-purple-600 hover:text-purple-800">
+                                            <FaTwitch />
+                                        </a>
+                                        <a href={blog.authorDiscord || "#"} target="_blank" rel="noopener noreferrer" className="text-2xl text-indigo-600 hover:text-indigo-800">
+                                            <FaDiscord />
+                                        </a>
+                                        {/* Añadir margen derecho al último icono y asegurar margen adicional en el contenedor */}
+                                        <a href={blog.authorYoutube || "#"} target="_blank" rel="noopener noreferrer" className="text-2xl text-red-600 hover:text-red-800 mr-8">
+                                            <FaYoutube />
+                                        </a>
+                                    </div>
+
+                                </div>
                             </div>
                         </div>
                     </div>
