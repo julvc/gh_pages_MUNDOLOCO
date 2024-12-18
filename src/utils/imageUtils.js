@@ -18,8 +18,8 @@ export const getImageUrl = (imageData, placeholder = "https://via.placeholder.co
 
 // Función para construir la URL de la imagen dependiendo del proveedor
 const buildImageUrl = (url) => {
-    // Si la URL ya es absoluta (por ejemplo, de Cloudinary), no se modifica
-    if (url.startsWith('http://') || url.startsWith('https://')) {
+    // Asegurarse de que la URL comienza con 'http://' o 'https://'
+    if (/^https?:\/\//.test(url)) {
         return url;
     }
 
