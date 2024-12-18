@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { FaRegClock } from 'react-icons/fa'; // Icono de reloj
+import { getImageUrl } from "../utils/imageUtils";
+
+
 
 const Blogs = ({ blogs }) => {
     if (!blogs?.data?.length) {
@@ -11,12 +14,12 @@ const Blogs = ({ blogs }) => {
         );
     }
 
-    const getCoverImageUrl = (coverImg) => {
-        if (coverImg && coverImg[0] && coverImg[0].url) {
-            return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
-        }
-        return "https://via.placeholder.com/300"; // Imagen por defecto
-    };
+    // const getCoverImageUrl = (coverImg) => {
+    //     if (coverImg && coverImg[0] && coverImg[0].url) {
+    //         return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
+    //     }
+    //     return "https://via.placeholder.com/300"; // Imagen por defecto
+    // };
 
     const formatDate = (date) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
@@ -32,7 +35,7 @@ const Blogs = ({ blogs }) => {
                             <div key={blog.id} className="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
                                 <Link to={`/blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group">
                                     {/* Imagen con efecto hover */}
-                                    <div className="relative w-full h-80 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${getCoverImageUrl(blog.coverImg)})` }}>
+                                    <div className="relative w-full h-80 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${getImageUrl(blog.coverImg)})` }}>
                                         {/* Fondo oscuro al hacer hover */}
                                         <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition-opacity duration-300"></div>
                                         {/* Contenido del texto */}

@@ -7,6 +7,7 @@ import { FaFacebook, FaInstagram, FaTwitch, FaDiscord, FaYoutube, FaArrowLeft } 
 import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import backButton from '../assets/back.png';
+import { getImageUrl } from "../utils/imageUtils";
 
 const BlogContent = ({ blogs }) => {
     const { category, title } = useParams();
@@ -63,19 +64,19 @@ const BlogContent = ({ blogs }) => {
             );
         }
 
-        const getCoverImageUrl = (coverImg) => {
-            if (coverImg && Array.isArray(coverImg) && coverImg.length > 0 && coverImg[0].url) {
-                return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
-            }
-            return "https://via.placeholder.com/300";
-        };
+        // const getCoverImageUrl = (coverImg) => {
+        //     if (coverImg && Array.isArray(coverImg) && coverImg.length > 0 && coverImg[0].url) {
+        //         return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
+        //     }
+        //     return "https://via.placeholder.com/300";
+        // };
 
-        const getAuthorImageUrl = (authorImg) => {
-            if (authorImg && authorImg.url) {
-                return `${import.meta.env.VITE_API_URL}${authorImg.url}`;
-            }
-            return "https://via.placeholder.com/100";
-        };
+        // const getAuthorImageUrl = (authorImg) => {
+        //     if (authorImg && authorImg.url) {
+        //         return `${import.meta.env.VITE_API_URL}${authorImg.url}`;
+        //     }
+        //     return "https://via.placeholder.com/100";
+        // };
 
         const getVideoEmbedUrl = (video) => {
             if (!video || !video.provider || !video.providerUid) return null;
@@ -113,7 +114,10 @@ const BlogContent = ({ blogs }) => {
                                 />
                             </div>
 
-                            <img src={getCoverImageUrl(blog.coverImg)} alt="Cover" className="w-full h-auto mb-6 rounded-lg shadow-lg" />
+                            {/* <img src={getCoverImageUrl(blog.coverImg)} alt="Cover" className="w-full h-auto mb-6 rounded-lg shadow-lg" /> */}
+                             {/* Imagen de portada */}
+                             <img src={getImageUrl(blog.coverImg)} alt="Cover" className="w-full h-auto mb-6 rounded-lg shadow-lg" />
+
                             <h1 className="font-bold text-4xl my-4">{blog.blogTitle}</h1>
                             <h3 className="font-bold text-2xl my-4">{blog.blogDesc}</h3>
 
@@ -152,7 +156,8 @@ const BlogContent = ({ blogs }) => {
                                     {blog.manyImg?.map((img, index) => (
                                         <img
                                             key={index}
-                                            src={`${import.meta.env.VITE_API_URL}${img.url}`}
+                                            // src={`${import.meta.env.VITE_API_URL}${img.url}`}
+                                            src={getImageUrl([img])} // Llamada a la función para manyImg
                                             alt={img.name || `Image ${index}`}
                                             className="w-60 h-60 object-cover rounded-md shadow-md transform hover:scale-110 cursor-pointer transition-transform duration-300"
                                             onClick={openCarousel}
@@ -196,7 +201,10 @@ const BlogContent = ({ blogs }) => {
                                 <div id="authorZone" className="w-full bg-white rounded-xl drop-shadow-md py-8 mt-8 lg:mt-8">
                                     <div className="flex items-center space-x-6">
                                         {/* Imagen del autor a la izquierda con margen */}
-                                        <img className="p-2 w-40 h-40 rounded-full object-cover ml-4" src={getAuthorImageUrl(blog.authorImg)} alt={blog.authorName} />
+                                        <img className="p-2 w-40 h-40 rounded-full object-cover ml-4" 
+                                        // src={getAuthorImageUrl(blog.authorImg)} 
+                                        src={getImageUrl(blog.authorImg, "https://via.placeholder.com/100")}
+                                        alt={blog.authorName} />
 
                                         <div className="text-left">
                                             {/* Nombre con color azul oscuro */}
