@@ -5,7 +5,10 @@ import react from '@vitejs/plugin-react';
 export default defineConfig({
   plugins: [react()],
   base: '/gh_pages_MUNDOLOCO/',
-  define: {
-    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL), // Esto asegura que la variable de entorno se utilice correctamente
+  build: {
+    outDir: 'dist', // Asegúrate de que esté configurado correctamente
   },
-})
+  define: {
+    'process.env.VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
+  },
+});
