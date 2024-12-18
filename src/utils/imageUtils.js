@@ -1,12 +1,13 @@
+// Función para obtener la URL de la imagen con un placeholder opcional
 export const getImageUrl = (imageData, placeholder = "https://via.placeholder.com/300") => {
     if (imageData) {
         // Si es un array (para coverImg y manyImg)
-        if (Array.isArray(imageData) && imageData.length > 0 && imageData[0].url) {
+        if (Array.isArray(imageData) && imageData.length > 0 && imageData[0]?.url) {
             return buildImageUrl(imageData[0].url);
         }
 
         // Si es un objeto con una propiedad 'url' (para authorImg)
-        if (imageData.url) {
+        if (imageData?.url) {
             return buildImageUrl(imageData.url);
         }
     }
