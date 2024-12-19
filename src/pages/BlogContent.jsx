@@ -11,6 +11,8 @@ import { getImageUrl } from "../utils/imageUtils";
 
 const BlogContent = ({ blogs }) => {
     // const { title } = useParams();
+    console.log("BLOG DESDE BlogContent: " , blogs)
+
     const { slug } = useParams();
     const navigate = useNavigate();
     const location = useLocation();
@@ -21,30 +23,43 @@ const BlogContent = ({ blogs }) => {
     };
 
     // Manejo de eventos para evitar que navegue a otras páginas con Backspace o popstate
+    // useEffect(() => {
+    //     const handleBackNavigation = (event) => {
+    //         if (event.state === null || location.pathname.startsWith('/blog')) {
+    //             navigate('/'); // Redirigir siempre al homepage
+    //         }
+    //     };
+
+    //     const handleBackspaceKeyPress = (event) => {
+    //         if (event.key === 'Backspace') {  // Detectamos la tecla Backspace
+    //             navigate('/'); // Redirigir siempre al homepage
+    //         }
+    //     };
+
+    //     window.addEventListener('popstate', handleBackNavigation);
+    //     window.addEventListener('keydown', handleBackspaceKeyPress);
+
+    //     // Limpiar eventos cuando el componente se desmonte
+    //     return () => {
+    //         window.removeEventListener('popstate', handleBackNavigation);
+    //         window.removeEventListener('keydown', handleBackspaceKeyPress);
+    //     };
+    // }, [location, navigate]);
+
     useEffect(() => {
         const handleBackNavigation = (event) => {
-            if (event.state === null || location.pathname.startsWith('/blog')) {
-                navigate('/'); // Redirigir siempre al homepage
+            if (location.pathname.startsWith('/blog')) {
+                navigate('/'); // Opcional: solo si realmente necesitas esta lógica
             }
         };
-
-        const handleBackspaceKeyPress = (event) => {
-            if (event.key === 'Backspace') {  // Detectamos la tecla Backspace
-                navigate('/'); // Redirigir siempre al homepage
-            }
-        };
-
+    
         window.addEventListener('popstate', handleBackNavigation);
-        window.addEventListener('keydown', handleBackspaceKeyPress);
-
-        // Limpiar eventos cuando el componente se desmonte
+    
         return () => {
             window.removeEventListener('popstate', handleBackNavigation);
-            window.removeEventListener('keydown', handleBackspaceKeyPress);
         };
     }, [location, navigate]);
-
-
+    
     const [isOpen, setIsOpen] = useState(false);
     const openCarousel = () => setIsOpen(true);
     const closeCarousel = () => setIsOpen(false);
@@ -55,13 +70,18 @@ const BlogContent = ({ blogs }) => {
     // Buscamos el blog por el slug en los datos que ya tenemos
     const blog = blogs?.data?.find(blog => blog.slug === slug);
 
+    console.log("ESTE ES EL BLOG: " , blog)
+
+    if (!blogs || !blogs.data) {
+        return <p>Cargando el blog...</p>; // Mensaje mientras se cargan los datos
+    }
     
     if (!blog) {
         return (
             <div className="w-full pb-10 bg-[#f9f9f9]">
                 <div className="max-w-[1600px] mx-auto text-center py-20">
                     <h1 className="text-4xl font-bold text-red-500">No se encontró el blog</h1>
-                    <p>El título "{title}" no coincide con ningún blog existente.</p>
+                    <p>El título no coincide con ningún blog existente.</p>
                 </div>
             </div>
         );

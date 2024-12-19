@@ -12,6 +12,8 @@ const Blogs = ({ blogs }) => {
         );
     }
 
+    console.log("BLOG DESDE BLOGS: " , blogs)
+
     // const getCoverImageUrl = (coverImg) => {
     //     if (coverImg && coverImg[0] && coverImg[0].url) {
     //         return `${import.meta.env.VITE_API_URL}${coverImg[0].url}`;
