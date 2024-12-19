@@ -9,12 +9,12 @@
         (function() {
             var path = window.location.pathname;
             var base = "/gh_pages_MUNDOLOCO";
-            
-            // Evita redirecciones infinitas comprobando si la ruta ya contiene la base
-            if (!path.startsWith(base)) {
-                window.location.replace(base + path + window.location.search);
+
+            // Asegurarse de no redirigir si la ruta ya incluye la base correcta
+            if (path.startsWith(base)) {
+                window.location.replace(base + "/#" + path.replace(base, "") + window.location.search);
             } else {
-                window.location.replace(base + "/");
+                window.location.replace(base + "/#" + path + window.location.search);
             }
         })();
     </script>
