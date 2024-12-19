@@ -8,12 +8,10 @@ import { Carousel } from 'react-responsive-carousel';
 import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import backButton from '../assets/back.png';
 import { getImageUrl } from "../utils/imageUtils";
-import useFetch from '../hooks/useFetch';
 
 const BlogContent = ({ blogs }) => {
     // const { title } = useParams();
     const { slug } = useParams();
-    console.log("VALOR SLUG " + slug)
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -54,11 +52,6 @@ const BlogContent = ({ blogs }) => {
         if (e.target.id === "modalBackground") closeCarousel();
     };
 
-    // Buscamos el blog por el título en la URL
-    // const blog = blogs?.data?.find(blog => blog.blogTitle.replace(/\s+/g, '-').toLowerCase() === title.toLowerCase().replace(/-/g, ' '));
-    // const blog = blogs?.data?.find(blog => blog.blogTitle.replace(/\s+/g, '-').toLowerCase() === encodeURIComponent(title.toLowerCase()).replace(/-/g, ' '));
-
-// const blog = blogs?.data?.find(blog => blog.blogTitle.replace(/\s+/g, '-').toLowerCase() === title.toLowerCase().replace(/-/g, ' '));
     // Buscamos el blog por el slug en los datos que ya tenemos
     const blog = blogs?.data?.find(blog => blog.slug === slug);
 
@@ -75,18 +68,11 @@ const BlogContent = ({ blogs }) => {
     }
 
     // Si el blog es encontrado, obtén el id
-    const blogId = blog.documentId;
-    console.log("URL BUSQUEDA: " + `${import.meta.env.VITE_API_URL}/api/blogs/${blogId}?populate=*`);
+    console.log("que es blog: " + blog);
     
-    // Ahora que tienes el id, puedes buscar el blog completo en la base de datos solo si está publicado
-    // Se utiliza la URL con el filtro para solo obtener el contenido con estado "published"
-    const { loading, data, error } = useFetch(`${import.meta.env.VITE_API_URL}/api/blogs/${blogId}?populate=*`);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error loading blog details.</p>;
-
-    const { blogTitle, blogContentOne, blogContentTwo, blogContentThree, coverImg, blogDesc } = data?.data || {};
-    const combinedContent = `${blogContentOne || ""}\n${blogContentTwo || ""}\n${blogContentThree || ""}`;
+    // const { blogTitle, blogContentOne, blogContentTwo, blogContentThree, coverImg, blogDesc } = data?.data || {};
+    const combinedContent = `${blog.blogContentOne || ""}\n${blog.blogContentTwo || ""}\n${blog.blogContentThree || ""}`;
 
     const getVideoEmbedUrl = (video) => {
         if (!video || !video.provider || !video.providerUid) return null;
@@ -122,10 +108,10 @@ const BlogContent = ({ blogs }) => {
                         </div>
 
                         {/* Imagen de portada */}
-                        <img src={getImageUrl(coverImg)} alt="Cover" className="w-full h-auto mb-6 rounded-lg shadow-lg" />
+                        <img src={getImageUrl(blog.coverImg)} alt="Cover" className="w-full h-auto mb-6 rounded-lg shadow-lg" />
 
-                        <h1 className="font-bold text-4xl my-4">{blogTitle}</h1>
-                        <h3 className="font-bold text-2xl my-4">{blogDesc}</h3>
+                        <h1 className="font-bold text-4xl my-4">{blog.blogTitle}</h1>
+                        <h3 className="font-bold text-2xl my-4">{blog.blogDesc}</h3>
 
                         <div className="prose">
                             <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdownContent}</ReactMarkdown>
