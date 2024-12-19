@@ -3,8 +3,6 @@ import { Link } from 'react-router-dom';
 import { FaRegClock } from 'react-icons/fa'; // Icono de reloj
 import { getImageUrl } from "../utils/imageUtils";
 
-
-
 const Blogs = ({ blogs }) => {
     if (!blogs?.data?.length) {
         return (
@@ -32,8 +30,9 @@ const Blogs = ({ blogs }) => {
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {blogs.data.map(blog => {
                         return (
-                            <div key={blog.id} className="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                                <Link to={`/blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group">
+                            <div key={blog.documentId} className="overflow-hidden rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                                <Link to={`/blog/${blog.slug}`} className="block group">
+                                {/* <Link to={`/blog/${encodeURIComponent(blog.blogTitle.replace(/\s+/g, '-'))}`} className="block group"> */}
                                     {/* Imagen con efecto hover */}
                                     <div className="relative w-full h-80 bg-cover bg-center transition-all duration-300" style={{ backgroundImage: `url(${getImageUrl(blog.coverImg)})` }}>
                                         {/* Fondo oscuro al hacer hover */}

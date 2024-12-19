@@ -2,18 +2,20 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Page Not Found</title>
+    <meta charset="utf-8" />
+    <meta http-equiv="refresh" content="0;url=/gh_pages_MUNDOLOCO/" />
     <script>
-        // Redirige automáticamente a la raíz para que React maneje la ruta
+        // Asegura que la ruta sea manejada por React Router
         window.location.replace(window.location.pathname);
     </script>
+    <title>Page Not Found</title>
 </head>
 
-<body>
-    <h1>Page Not Found</h1>
-    <p>Redirecting...</p>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen">
+    <div class="text-center">
+        <h1 class="text-4xl font-bold text-red-600 mb-4">404 - Página no encontrada</h1>
+        <p class="text-xl text-gray-700">Lo sentimos, no podemos encontrar la página que estás buscando.</p>
+    </div>
 </body>
 
 </html>

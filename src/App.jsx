@@ -2,14 +2,14 @@ import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Homepage from './pages/Homepage';
 import BlogContent from './pages/BlogContent';
-import useFetch from './hooks/useFetch';
 import Layout from './Layout';
+import useFetch from '../src/hooks/useFetch';
 
 const App = () => {
-    console.log("VALOR VITE_API_URL");
-    console.log(import.meta.env.VITE_API_URL);
+    // const { loading, data, error } = useFetch(`${import.meta.env.VITE_API_URL}/api/blogs?populate=*`);
     const { loading, data, error } = useFetch(`${import.meta.env.VITE_API_URL}/api/blogs?populate=*`);
-
+    console.log(data); // Verifica si los datos se están recibiendo correctamente
+    
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error loading blogs.</p>;
 
@@ -18,8 +18,8 @@ const App = () => {
             <Routes>
                 <Route path="/" element={<Homepage blogs={data} />} />
                 <Route path="/category/:category" element={<BlogContent blogs={data} />} />
-                <Route path="/blog/:title" element={<BlogContent blogs={data} />} />
-                {/* <Route path="/blog/:id" element={<BlogContent blogs={data} />} /> */}
+                {/* <Route path="/blog/:title" element={<BlogContent blogs={data} />} /> */}
+                <Route path="/blog/:slug" element={<BlogContent blogs={data} />} />
             </Routes>
         </Layout>
     );
