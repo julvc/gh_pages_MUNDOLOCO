@@ -1,12 +1,20 @@
 import React from 'react';
-import { Blogs } from '../components';
+import { useParams } from 'react-router-dom';
+import Blogs from '../components/Blogs';
 
 const Homepage = ({ blogs }) => {
-    return (
-        <div className="pt-[120px]"> {/* Ajusta 120px a la altura del Navbar */}
-            <Blogs blogs={blogs ? blogs : ''} />
-        </div>
-    );
+    const { category } = useParams();
+
+    // Filtrar blogs por categoría si existe el parámetro
+    const filteredBlogs = category
+        ? blogs?.data?.filter((blog) =>
+            blog.categories?.some(
+                (cat) => cat.name.toLowerCase() === category.toLowerCase()
+            )
+        )
+        : blogs?.data;
+
+    return <Blogs blogs={{ data: filteredBlogs }} />;
 };
 
 export default Homepage;

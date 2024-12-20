@@ -1,4 +1,3 @@
-// src/components/Navbar.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
@@ -38,7 +37,7 @@ const Navbar = () => {
 
                 <div className="flex items-center">
                     <ul className="hidden md:flex text-sm space-x-8">
-                        {["anime", "videojuegos", "peliculas", "series", "tecnologia", "reseñas"].map((category) => (
+                        {["Anime", "Móviles", "Novelas", "Películas", "Reseñas", "Series", "Tecnología", "Videojuegos"].map((category) => (
                             <li
                                 key={category}
                                 className="text-blue-800 font-bold cursor-pointer transition-transform duration-200 hover:scale-110 capitalize"
@@ -66,7 +65,7 @@ const Navbar = () => {
 
             {/* Menú desplegable para móviles */}
             <ul className={toggle ? 'absolute bg-white w-full px-8 md:hidden' : 'hidden'}>
-                {["anime", "videojuegos", "peliculas", "series", "tecnologia", "reseñas"].map((category) => (
+                {["Anime", "Móviles", "Novelas", "Películas", "Reseñas", "Series", "Tecnología", "Videojuegos"].map((category) => (
                     <li
                         key={category}
                         className="py-2 text-blue-800 font-bold cursor-pointer transition-transform duration-200 hover:scale-110 capitalize"

@@ -12,8 +12,6 @@ const Blogs = ({ blogs }) => {
         );
     }
 
-    console.log("BLOG DESDE BLOGS: " , blogs)
-
     const formatDate = (date) => {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
         return new Date(date).toLocaleDateString('es-ES', options); // Formato: 10 dic. 2024
