@@ -1,3 +1,4 @@
+// src/components/Navbar.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
@@ -6,25 +7,25 @@ import menu from '../assets/menu.svg';
 
 const Navbar = () => {
     const [toggle, setToggle] = useState(false);
-    const [logoOpacity, setLogoOpacity] = useState(true); // Estado para manejar opacidad al hacer clic
-    const navigate = useNavigate(); // Hook de navegación de React Router
+    const [logoOpacity, setLogoOpacity] = useState(true);
+    const navigate = useNavigate();
 
     const handleClick = () => setToggle(!toggle);
 
     const handleLogoClick = () => {
-        setLogoOpacity(false); // Cambiar opacidad a 100% (sin transparencia)
-        navigate('/'); // Redirigir a la página principal
-        setTimeout(() => setLogoOpacity(true), 200); // Restaurar opacidad tras 200ms
+        setLogoOpacity(false);
+        navigate('/'); // Navegar a la página principal
+        setTimeout(() => setLogoOpacity(true), 200);
     };
 
     const handleCategoryClick = (category) => {
-        navigate(`/category/${category}`); // Redirigir a la página de la categoría seleccionada
+        navigate(`/category/${category}`); // Navegar a la página de la categoría seleccionada
+        setToggle(false); // Cerrar el menú móvil después de hacer clic
     };
 
     return (
         <div className="w-full h-[120px] z-10 bg-white fixed drop-shadow-lg">
             <div className="max-w-screen-2xl mx-auto flex justify-between items-center h-full px-4">
-                {/* Logo */}
                 <div className="flex items-center">
                     <img
                         src={logo}
@@ -35,13 +36,12 @@ const Navbar = () => {
                     />
                 </div>
 
-                {/* Menú de navegación */}
                 <div className="flex items-center">
                     <ul className="hidden md:flex text-sm space-x-8">
-                        {["Anime", "Videojuegos", "Peliculas", "Series", "Tecnologia", "Reseñas"].map((category) => (
+                        {["anime", "videojuegos", "peliculas", "series", "tecnologia", "reseñas"].map((category) => (
                             <li
                                 key={category}
-                                className="text-blue-800 font-bold cursor-pointer transition-transform duration-200 hover:scale-110"
+                                className="text-blue-800 font-bold cursor-pointer transition-transform duration-200 hover:scale-110 capitalize"
                                 onClick={() => handleCategoryClick(category)}
                             >
                                 {category}
@@ -50,13 +50,11 @@ const Navbar = () => {
                     </ul>
                 </div>
 
-                {/* Botones */}
                 <div className="hidden md:flex">
                     <button className="border-none bg-transparent text-black mr-4">Login</button>
                     <button className="px-8 py-3 bg-blue-500 text-white rounded-lg">Registro</button>
                 </div>
 
-                {/* Menú móvil */}
                 <div className="md:hidden" onClick={handleClick}>
                     <img
                         src={!toggle ? menu : close}
@@ -66,16 +64,13 @@ const Navbar = () => {
                 </div>
             </div>
 
-            {/* Dropdown para móviles */}
+            {/* Menú desplegable para móviles */}
             <ul className={toggle ? 'absolute bg-white w-full px-8 md:hidden' : 'hidden'}>
-                {["Anime", "Videojuegos", "Peliculas", "Series", "Tecnologia", "Reseñas"].map((category) => (
+                {["anime", "videojuegos", "peliculas", "series", "tecnologia", "reseñas"].map((category) => (
                     <li
                         key={category}
-                        className="py-2 text-blue-800 font-bold cursor-pointer transition-transform duration-200 hover:scale-110"
-                        onClick={() => {
-                            handleCategoryClick(category);
-                            setToggle(false); // Cierra el menú después de hacer clic
-                        }}
+                        className="py-2 text-blue-800 font-bold cursor-pointer transition-transform duration-200 hover:scale-110 capitalize"
+                        onClick={() => handleCategoryClick(category)}
                     >
                         {category}
                     </li>

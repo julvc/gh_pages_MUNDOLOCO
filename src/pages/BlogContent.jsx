@@ -11,7 +11,7 @@ import { getImageUrl } from "../utils/imageUtils";
 
 const BlogContent = ({ blogs }) => {
     // const { title } = useParams();
-    console.log("BLOG DESDE BlogContent: " , blogs)
+    console.log("BLOG DESDE BlogContent: ", blogs)
 
     const { slug } = useParams();
     const navigate = useNavigate();
@@ -28,14 +28,14 @@ const BlogContent = ({ blogs }) => {
                 navigate('/'); // Opcional: solo si realmente necesitas esta lógica
             }
         };
-    
+
         window.addEventListener('popstate', handleBackNavigation);
-    
+
         return () => {
             window.removeEventListener('popstate', handleBackNavigation);
         };
     }, [location, navigate]);
-    
+
     const [isOpen, setIsOpen] = useState(false);
     const openCarousel = () => setIsOpen(true);
     const closeCarousel = () => setIsOpen(false);
@@ -46,12 +46,12 @@ const BlogContent = ({ blogs }) => {
     // Buscamos el blog por el slug en los datos que ya tenemos
     const blog = blogs?.data?.find(blog => blog.slug === slug);
 
-    console.log("ESTE ES EL BLOG: " , blog)
+    console.log("ESTE ES EL BLOG: ", blog)
 
     if (!blogs || !blogs.data) {
         return <p>Cargando el blog...</p>; // Mensaje mientras se cargan los datos
     }
-    
+
     if (!blog) {
         return (
             <div className="w-full pb-10 bg-[#f9f9f9]">
@@ -65,7 +65,7 @@ const BlogContent = ({ blogs }) => {
 
     // Si el blog es encontrado, obtén el id
     console.log("que es blog: " + blog);
-    
+
 
     // const { blogTitle, blogContentOne, blogContentTwo, blogContentThree, coverImg, blogDesc } = data?.data || {};
     const combinedContent = `${blog.blogContentOne || ""}\n${blog.blogContentTwo || ""}\n${blog.blogContentThree || ""}`;
@@ -90,12 +90,32 @@ const BlogContent = ({ blogs }) => {
             <div className="max-w-[2500px] mx-auto">
                 <div id="blogZone" className="grid lg:grid-cols-1 px-6 text-black">
                     <div className="w-full pt-28">
+                        {/* Para verificar filtro de categorias */}
+                        <div className="max-w-screen-2xl mx-auto p-4">
+                            <h1 className="text-3xl font-bold mb-6 capitalize">
+                                {category ? `Categoría: ${category}` : 'Todos los Blogs'}
+                            </h1>
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                {filteredBlogs.length > 0 ? (
+                                    filteredBlogs.map((blog) => (
+                                        <div key={blog.id} className="p-4 border rounded shadow">
+                                            <h2 className="text-xl font-bold">{blog.attributes.title}</h2>
+                                            <p>{blog.attributes.content}</p>
+                                            <p className="text-sm text-gray-500">
+                                                Categoría: {blog.attributes.category?.data?.attributes?.name}
+                                            </p>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p>No se encontraron blogs en esta categoría.</p>
+                                )}
+                            </div>
+                        </div>
                         {/* Flecha para regresar al homepage */}
                         <div
                             onClick={goHome}
                             className="fixed bottom-10 right-5 z-20 cursor-pointer"
-                            style={{ width: '350px', height: '50px', marginRight: '-120px' }} // Tamaño de la imagen
-                        >
+                            style={{ width: '350px', height: '50px', marginRight: '-120px' }} >
                             <img
                                 src={backButton} // Ruta a tu imagen personalizada
                                 alt="Back"
