@@ -29,11 +29,6 @@ const useFetch = (url) => {
         fetchData();
     }, [url]);
 
-    // Depuración: imprimir en consola
-    // console.log('Cargando:', loading);
-    // console.log('Datos:', data);
-    // console.log('Error:', error);
-
     return { loading, error, data };
 };
 

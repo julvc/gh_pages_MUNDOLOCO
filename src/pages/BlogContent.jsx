@@ -22,30 +22,6 @@ const BlogContent = ({ blogs }) => {
         navigate('/');
     };
 
-    // Manejo de eventos para evitar que navegue a otras páginas con Backspace o popstate
-    // useEffect(() => {
-    //     const handleBackNavigation = (event) => {
-    //         if (event.state === null || location.pathname.startsWith('/blog')) {
-    //             navigate('/'); // Redirigir siempre al homepage
-    //         }
-    //     };
-
-    //     const handleBackspaceKeyPress = (event) => {
-    //         if (event.key === 'Backspace') {  // Detectamos la tecla Backspace
-    //             navigate('/'); // Redirigir siempre al homepage
-    //         }
-    //     };
-
-    //     window.addEventListener('popstate', handleBackNavigation);
-    //     window.addEventListener('keydown', handleBackspaceKeyPress);
-
-    //     // Limpiar eventos cuando el componente se desmonte
-    //     return () => {
-    //         window.removeEventListener('popstate', handleBackNavigation);
-    //         window.removeEventListener('keydown', handleBackspaceKeyPress);
-    //     };
-    // }, [location, navigate]);
-
     useEffect(() => {
         const handleBackNavigation = (event) => {
             if (location.pathname.startsWith('/blog')) {
